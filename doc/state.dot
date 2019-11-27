@@ -1,0 +1,79 @@
+digraph QState {
+    LOCAL_NO [];
+    LOCAL_WANT_NO [];
+    LOCAL_WANT_NO_OPPOSITE [];
+    LOCAL_YES [];
+    LOCAL_WANT_YES [];
+    LOCAL_WANT_YES_OPPOSITE [];
+    LOCAL_Ignore [];
+    LOCAL_Error [];
+    REMOTE_NO [];
+    REMOTE_WANT_NO [];
+    REMOTE_WANT_NO_OPPOSITE [];
+    REMOTE_YES [];
+    REMOTE_WANT_YES [];
+    REMOTE_WANT_YES_OPPOSITE [];
+    REMOTE_Ignore [];
+    REMOTE_Error [];
+
+    LOCAL_NO -> LOCAL_WANT_YES [label = "SendWill", color = "green"];
+    LOCAL_NO -> LOCAL_Error [label = "SendWont", color = "red",style = "dashed"];
+    LOCAL_NO -> LOCAL_WANT_YES [label = "RecvDo", color = "blue"];
+    LOCAL_NO -> LOCAL_Ignore [label = "RecvDont", color = "purple", style = "dashed"];
+
+    LOCAL_WANT_NO -> LOCAL_WANT_NO_OPPOSITE [label = "SendWill", color = "green"];
+    LOCAL_WANT_NO -> LOCAL_Error [label = "SendWont", color = "red", style = "dashed"];
+    LOCAL_WANT_NO -> LOCAL_Error [label = "RecvDo", color = "blue", style = "dashed"];
+    LOCAL_WANT_NO -> LOCAL_NO [label = "RecvDont", color = "purple"];
+
+    LOCAL_WANT_NO_OPPOSITE -> LOCAL_YES [label = "SendWill", color = "green"];
+    LOCAL_WANT_NO_OPPOSITE -> LOCAL_WANT_NO [label = "SendWont", color = "red"];
+    LOCAL_WANT_NO_OPPOSITE -> LOCAL_Error [label = "RecvDo", color = "blue", style = "dashed"];
+    LOCAL_WANT_NO_OPPOSITE -> LOCAL_WANT_YES [label = "RecvDont", color = "purple"];
+
+    LOCAL_YES -> LOCAL_Ignore [label = "SendWill", color = "green", style = "dashed"];
+    LOCAL_YES -> LOCAL_WANT_NO [label = "SendWont", color = "red"];
+    LOCAL_YES -> LOCAL_Ignore [label = "RecvDo", color = "blue", style = "dashed"];
+    LOCAL_YES -> LOCAL_NO [label = "RecvDont", color = "purple"];
+
+    LOCAL_WANT_YES -> LOCAL_Error [label = "SendWill", color = "green", style = "dashed"];
+    LOCAL_WANT_YES -> LOCAL_WANT_YES_OPPOSITE [label = "SendWont", color = "red"];
+    LOCAL_WANT_YES -> LOCAL_YES [label = "RecvDo", color = "blue"];
+    LOCAL_WANT_YES -> LOCAL_NO [label = "RecvDont", color = "purple"];
+
+    LOCAL_WANT_YES_OPPOSITE -> LOCAL_WANT_YES [label = "SendWill", color = "green"];
+    LOCAL_WANT_YES_OPPOSITE -> LOCAL_Error [label = "SendWont", color = "red", style = "dashed"];
+    LOCAL_WANT_YES_OPPOSITE -> LOCAL_WANT_NO [label = "RecvDo", color = "blue"];
+    LOCAL_WANT_YES_OPPOSITE -> LOCAL_NO [label = "RecvDont", color = "purple"];
+
+    //
+    REMOTE_NO -> REMOTE_WANT_YES [label = "SendDo", color = "green"];
+    REMOTE_NO -> REMOTE_Error [label = "SendDont", color = "red",style = "dashed"];
+    REMOTE_NO -> REMOTE_WANT_YES [label = "RecvWill", color = "blue"];
+    REMOTE_NO -> REMOTE_Ignore [label = "RecvWont", color = "purple", style = "dashed"];
+
+    REMOTE_WANT_NO -> REMOTE_WANT_NO_OPPOSITE [label = "SendDo", color = "green"];
+    REMOTE_WANT_NO -> REMOTE_Error [label = "SendDont", color = "red", style = "dashed"];
+    REMOTE_WANT_NO -> REMOTE_Error [label = "RecvWill", color = "blue", style = "dashed"];
+    REMOTE_WANT_NO -> REMOTE_NO [label = "RecvWont", color = "purple"];
+
+    REMOTE_WANT_NO_OPPOSITE -> REMOTE_YES [label = "SendDo", color = "green"];
+    REMOTE_WANT_NO_OPPOSITE -> REMOTE_WANT_NO [label = "SendDont", color = "red"];
+    REMOTE_WANT_NO_OPPOSITE -> REMOTE_Error [label = "RecvWill", color = "blue", style = "dashed"];
+    REMOTE_WANT_NO_OPPOSITE -> REMOTE_WANT_YES [label = "RecvWont", color = "purple"];
+
+    REMOTE_YES -> REMOTE_Ignore [label = "SendDo", color = "green", style = "dashed"];
+    REMOTE_YES -> REMOTE_WANT_NO [label = "SendDont", color = "red"];
+    REMOTE_YES -> REMOTE_Ignore [label = "RecvWill", color = "blue", style = "dashed"];
+    REMOTE_YES -> REMOTE_NO [label = "RecvWont", color = "purple"];
+
+    REMOTE_WANT_YES -> REMOTE_Error [label = "SendDo", color = "green", style = "dashed"];
+    REMOTE_WANT_YES -> REMOTE_WANT_YES_OPPOSITE [label = "SendDont", color = "red"];
+    REMOTE_WANT_YES -> REMOTE_YES [label = "RecvWill", color = "blue"];
+    REMOTE_WANT_YES -> REMOTE_NO [label = "RecvWont", color = "purple"];
+
+    REMOTE_WANT_YES_OPPOSITE -> REMOTE_WANT_YES [label = "SendDo", color = "green"];
+    REMOTE_WANT_YES_OPPOSITE -> REMOTE_Error [label = "SendDont", color = "red", style = "dashed"];
+    REMOTE_WANT_YES_OPPOSITE -> REMOTE_WANT_NO [label = "RecvWill", color = "blue"];
+    REMOTE_WANT_YES_OPPOSITE -> REMOTE_NO [label = "RecvWont", color = "purple"];
+}
