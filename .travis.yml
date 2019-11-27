@@ -1,0 +1,32 @@
+language: rust
+sudo: false
+cache: cargo
+
+rust:
+  - stable
+  - beta
+  - nightly
+
+jobs:
+  allow_failures:
+    - rust: nightly
+  fast_finish: true
+
+script: 
+  - cargo build --verbose
+  - cargo test --verbose
+  - cargo doc --verbose
+
+before_deploy:
+  - cargo doc --verbose
+  - echo '<meta http-equiv="refresh" content="0; url=tokio-telnet/index.html" /> ' > target/doc/index.html
+  - cp -r target/doc public
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  keep_history: true
+  local_dir: public
+  on:
+    branch: master
