@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["ACCEPTED",""],["REJECTED",""],["REQUEST",""],["TTABLE_ACK",""],["TTABLE_IS",""],["TTABLE_NAK",""],["TTABLE_REJECTED",""]]});
