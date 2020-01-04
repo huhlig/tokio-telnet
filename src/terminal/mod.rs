@@ -17,8 +17,9 @@
 mod arguments;
 mod error;
 mod input;
-mod output;
 mod options;
+mod output;
+mod state;
 mod terminal;
 
 pub use self::error::TerminalError;
@@ -27,11 +28,11 @@ pub use self::output::TerminalOutput;
 pub use self::terminal::NetworkVirtualTerminal;
 
 pub mod option {
-    pub use super::options::TerminalOption;
-    pub use super::arguments::TelnetArgument;
     pub use super::arguments::msdp;
     pub use super::arguments::mssp;
     pub use super::arguments::naocrd;
     pub use super::arguments::naohts;
     pub use super::arguments::status;
+    pub use super::arguments::TelnetArgument;
+    pub use super::options::TerminalOption;
 }

@@ -14,7 +14,11 @@
 // limitations under the License.
 //
 
-use crate::terminal::arguments::{TelnetOption, TelnetOptionArguments, TelnetArgument};
+use crate::terminal::arguments::{
+    TelnetArgument, TelnetOption, TelnetOptionArguments,
+};
+use crate::terminal::options::TerminalOption;
+use crate::terminal::{OptionStatus, TerminalEndpoint};
 
 ///
 /// Valid Input Events to the Terminal
@@ -43,13 +47,8 @@ pub enum TerminalInput {
     AsciiData(String),
     /// Terminal Received Binary Data
     BinaryData(Vec<u8>),
-    /// Request Enabling of Sending Option
-    EnableLocalOption(TelnetOption),
-    /// Request Disabling of Sending Option
-    DisableLocalOption(TelnetOption),
-    /// Request Enabling of Receiving Option
-    EnableRemoteOption(TelnetOption),
-    /// Request Disabling of Receiving Option
-    DisableRemoteOption(TelnetOption),
-
+    /// Set Option Status
+    TerminalOptionStatus(TerminalEndpoint, TerminalOption, OptionStatus),
+    /// Send Argument
+    TerminalOptionArgument(TerminalEndpoint, TerminalOptionArgument),
 }

@@ -57,12 +57,12 @@ digraph QState {
     REMOTE_WANT_NO -> REMOTE_Error [label = "RecvWill", color = "blue", style = "dashed"];
     REMOTE_WANT_NO -> REMOTE_NO [label = "RecvWont", color = "purple"];
 
-    REMOTE_WANT_NO_OPPOSITE -> REMOTE_YES [label = "SendDo", color = "green"];
+    REMOTE_WANT_NO_OPPOSITE -> REMOTE_Error [label = "SendDo", color = "green"];
     REMOTE_WANT_NO_OPPOSITE -> REMOTE_WANT_NO [label = "SendDont", color = "red"];
     REMOTE_WANT_NO_OPPOSITE -> REMOTE_Error [label = "RecvWill", color = "blue", style = "dashed"];
     REMOTE_WANT_NO_OPPOSITE -> REMOTE_WANT_YES [label = "RecvWont", color = "purple"];
 
-    REMOTE_YES -> REMOTE_Ignore [label = "SendDo", color = "green", style = "dashed"];
+    REMOTE_YES -> REMOTE_Error [label = "SendDo", color = "green", style = "dashed"];
     REMOTE_YES -> REMOTE_WANT_NO [label = "SendDont", color = "red"];
     REMOTE_YES -> REMOTE_Ignore [label = "RecvWill", color = "blue", style = "dashed"];
     REMOTE_YES -> REMOTE_NO [label = "RecvWont", color = "purple"];

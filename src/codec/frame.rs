@@ -14,6 +14,8 @@
 // limitations under the License.
 //
 
+use crate::codec::TelnetOption;
+
 ///
 /// `TelnetFrame` is a single immutable Frame of data.
 ///
@@ -40,13 +42,13 @@ pub enum TelnetFrame {
     /// End of input for half-duplex connections.
     GoAhead,
     /// Request to start using specified arguments.
-    Do(u8),
+    Do(TelnetOption),
     /// Demand to stop using specified arguments.
-    Dont(u8),
+    Dont(TelnetOption),
     /// Agreement to use the specified arguments.
-    Will(u8),
+    Will(TelnetOption),
     /// Reject the proposed arguments.
-    Wont(u8),
+    Wont(TelnetOption),
     /// Subnegotiation Payload
-    Subnegotiate(u8, Vec<u8>),
+    Subnegotiate(TelnetOption, Vec<u8>),
 }

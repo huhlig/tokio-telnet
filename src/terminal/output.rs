@@ -15,6 +15,7 @@
 //
 
 use super::option::TerminalOption;
+use crate::terminal::{OptionStatus, TerminalEndpoint};
 
 ///
 /// Output generated from the Telnet Network Virtual Terminal
@@ -43,12 +44,8 @@ pub enum TerminalOutput {
     AsciiData(String),
     /// Terminal Received Binary Data
     BinaryData(Vec<u8>),
-    /// Local Option Enabled
-    LocalOptionEnabled(TerminalOption),
-    /// Local Option Disabled
-    LocalOptionDisabled(TerminalOption),
-    /// Remote Option Enabled
-    RemoteOptionEnabled(TerminalOption),
-    /// Remote Option Disabled
-    RemoteOptionDisabled(TerminalOption),
+    /// Current Status of option. May have changed
+    TerminalOptionStatus(TerminalEndpoint, TerminalOption, OptionStatus),
+    /// Received Option Argument
+    TerminalOptionArgument(TerminalEndpoint, TerminalOptionArgument),
 }

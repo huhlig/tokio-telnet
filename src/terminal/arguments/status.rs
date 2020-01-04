@@ -15,6 +15,7 @@
 //
 
 use crate::consts;
+use crate::terminal::options::TerminalOption;
 use crate::terminal::TerminalOption;
 use bytes::BufMut;
 use std::collections::HashMap;

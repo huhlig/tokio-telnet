@@ -15,12 +15,11 @@
 //
 
 pub use self::args::TelnetArgument;
+pub use self::manager::{Action, Manager};
 pub use self::options::TelnetOption;
-pub use self::manager::{Manager, Action};
 
 pub mod msdp;
 pub mod mssp;
 pub mod naocrd;
 pub mod naohts;
 pub mod status;
-

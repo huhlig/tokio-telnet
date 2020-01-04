@@ -41,12 +41,8 @@ pub struct NetworkVirtualTerminal<S>
     framed: Framed<S, TelnetCodec>,
     /// Terminal Input Buffer
     buffer: BytesMut,
-    /// Compatibility
-    compatibility: Compatibility,
     /// Current Option Negotiation State
-    options: [(NegotiationState, NegotiationState); 255],
-    /// Current Options We have Configured
-    enabled: [(bool, bool); 255],
+    options: [((bool, NegotiationState), (bool, NegotiationState)); 255],
 }
 
 impl<S> NetworkVirtualTerminal<S>
@@ -57,9 +53,7 @@ impl<S> NetworkVirtualTerminal<S>
         NetworkVirtualTerminal {
             framed: Framed::new(stream, TelnetCodec::default()),
             buffer: BytesMut::with_capacity(8 * 4096),
-            compatibility: Compatibility::default(),
             options: [(NegotationState::No, NegotationState::No); 255],
-            enabled: [(false, false); 255],
         }
     }
 
@@ -81,26 +75,6 @@ impl<S> NetworkVirtualTerminal<S>
         //
         }
         // @formatter:on
-    }
-
-    /// Are we doing specified option
-    fn option_supported_locally(option: TelnetOption) -> bool {
-        consts::option::SUPPORT[option].0
-    }
-
-    /// Are they doing specified option
-    fn option_supported_remotely(option: TelnetOption) -> bool {
-        consts::option::SUPPORT[option].0
-    }
-
-    /// Are we doing specified option
-    fn option_enabled_locally(&self, option: TelnetOption) -> bool {
-        self.options.1[option as usize].0
-    }
-
-    /// Are they doing specified option
-    fn option_enabled_remotely(&self, option: TelnetOption) -> bool {
-        self.options.1[option as usize].1
     }
 }
 

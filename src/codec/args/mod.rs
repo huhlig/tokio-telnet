@@ -14,27 +14,26 @@
 // limitations under the License.
 //
 
-use std::{error, fmt};
+use bytes::BufMut;
 
 ///
-/// Telnet Network Virtual Terminal Error
+/// Telnet Subnegotiation Argument
 ///
-#[derive(Clone, Debug)]
-pub enum TerminalError {
-    /// Error Configuring Terminal
-    ConfigurationError,
-    /// Error Negotiating With Remote
-    NegotationError,
+pub enum TelnetArgument {
+    Unknown(Vec<u8>),
 }
 
-impl error::Error for TerminalError {
-    fn source(&self) -> Option<&(dyn error::Error + 'static)> {
-        None
-    }
-}
-
-impl fmt::Display for TerminalError {
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "TerminalError")
-    }
+pub trait Argument {
+    ///
+    /// Get Encoded Length of `Argument`
+    ///
+    fn len(&self) -> usize;
+    ///
+    /// Encode `Argument` to `BufMut`
+    ///
+    fn encode<T: BufMut>(&self, dst: &mut T);
+    ///
+    /// Decode `Argument` to `BufMut`
+    ///
+    fn dencode<T: BufMut>(&self, src: &mut T) -> Self;
 }

@@ -14,31 +14,93 @@
 // limitations under the License.
 //
 
+use crate::consts::option::SUPPORT;
+use crate::terminal::options::TerminalOption;
+
+pub struct ConfigurationError;
+
 pub struct NegotiationError;
 
-pub struct OptionManager {
-    options: [(State, State); 255],
-    enabled: [(bool, bool); 255],
+///
+/// Network Virtual Terminal Configuration
+///
+pub struct OptionState {
+    options: [((ConfiguredState, NegotiationState), (ConfiguredState, NegotiationState)); 255],
 }
 
-impl OptionManager {
-    pub fn enable_local(&mut self, option: TelnetOption) -> Result<Option<TelnetFrame>, NegotiationError> {}
-    pub fn disable_local(&mut self, option: TelnetOption) -> Result<Option<TelnetFrame>, NegotiationError> {}
-    pub fn enable_remote(&mut self, option: TelnetOption) -> Result<Option<TelnetFrame>, NegotiationError> {}
-    pub fn disable_remote(&mut self, option: TelnetOption) -> Result<Option<TelnetFrame>, NegotiationError> {}
-    pub fn receive_do(&mut self, option: TelnetOption) -> Result<Option<TelnetFrame>, NegotiationError> {}
-    pub fn receive_dont(&mut self, option: TelnetOption) -> Result<Option<TelnetFrame>, NegotiationError> {}
-    pub fn receive_dowill(&mut self, option: TelnetOption) -> Result<Option<TelnetFrame>, NegotiationError> {}
-    pub fn receive_wont(&mut self, option: TelnetOption) -> Result<Option<TelnetFrame>, NegotiationError> {}
-    fn handle(&mut self, source: Source, action: Action, option: TelnetOption) -> Result<Option<TelnetFrame>, NegotiationError> {
+impl TerminalConfiguration {
+    pub fn option_local_supported(&self, option: TerminalOption) -> bool {
+        crate::consts::option::SUPPORT[option].0
+    }
+    pub fn option_remote_supported(&self, option: TerminalOption) -> bool {
+        crate::consts::option::SUPPORT[option].1
+    }
+    pub fn option_allowed_local(&self, option: TerminalOption) -> bool {
+        self.option_local_supported(option) && (self.options[option].0).0
+    }
+    pub fn option_allowed_remote(&self, option: TerminalOption) -> bool {
+        self.option_remote_supported(option) && (self.options[option].1).0
+    }
+    pub fn option_enabled_local(&mut self, option: TerminalOption) -> bool {
+        self.options.
+    }
+    pub fn option_enabled_remote(&mut self, option: TerminalOption) -> bool {
+        self.option_remote_supported(option) && (self.options[option].1).0
+    }
+}
+
+impl TerminalConfiguration {
+    pub fn enable_local(
+        &mut self,
+        option: TelnetOption,
+    ) -> Result<Option<TelnetFrame>, NegotiationError> {
+    }
+    pub fn disable_local(
+        &mut self,
+        option: TelnetOption,
+    ) -> Result<Option<TelnetFrame>, NegotiationError> {
+    }
+    pub fn enable_remote(
+        &mut self,
+        option: TelnetOption,
+    ) -> Result<Option<TelnetFrame>, NegotiationError> {
+    }
+    pub fn disable_remote(
+        &mut self,
+        option: TelnetOption,
+    ) -> Result<Option<TelnetFrame>, NegotiationError> {
+    }
+    pub fn receive_do(
+        &mut self,
+        option: TelnetOption,
+    ) -> Result<Option<TelnetFrame>, NegotiationError> {
+    }
+    pub fn receive_dont(
+        &mut self,
+        option: TelnetOption,
+    ) -> Result<Option<TelnetFrame>, NegotiationError> {
+    }
+    pub fn receive_dowill(
+        &mut self,
+        option: TelnetOption,
+    ) -> Result<Option<TelnetFrame>, NegotiationError> {
+    }
+    pub fn receive_wont(
+        &mut self,
+        option: TelnetOption,
+    ) -> Result<Option<TelnetFrame>, NegotiationError> {
+    }
+    /// Handle Incoming
+    fn handle(
+        &mut self,
+        action: Action,
+        option: TelnetOption,
+    ) -> Result<Option<TelnetFrame>, NegotiationError> {
         use self::{Action::*, Source::*, State::*};
         // @formatter:off
         #[rustfmt::skip]
         match (self.options[option].0, self.options[option].1, source, action) {
         //  (Local State, Remote State, Source, Action) => {  }
-            (         No,            _,   Send,     Will) => { self.options[option].0 = WantYes;
-                                                               Ok(Some(TelnetFrame::Will(option))) }
-            (         No,            _,   Send,     Wont) => { return NegotiationError }
             (         No,            _,   Recv,       Do) => { self.options[option].0 = WantYes;
                                                                Ok(Some(TelnetFrame::Will(option)))}
             (         No,            _,   Recv,     Dont) => { Ok(None) /* Ignore */ }
@@ -69,11 +131,17 @@ enum Action {
     Wont,
 }
 
-enum State {
+enum NegotiationState {
     No,
     WantNo,
     WantNoOpposite,
     Yes,
     WantYes,
     WantYesOpposite,
+}
+
+enum ConfiguredState {
+    Unsupported,
+    Supported,
+    Allowed,
 }

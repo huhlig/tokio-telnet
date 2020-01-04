@@ -14,18 +14,18 @@
 // limitations under the License.
 //
 
+mod args;
 mod codec;
-
-pub use self::codec::TelnetCodec;
-
 mod error;
+mod frame;
+mod options;
 
+pub use self::args::TelnetArgument;
+pub use self::codec::TelnetCodec;
 pub use self::error::DecodeError;
 pub use self::error::EncodeError;
-
-mod frame;
-
 pub use self::frame::TelnetFrame;
+pub use self::options::TelnetOption;
 
 #[cfg(test)]
 mod tests {
