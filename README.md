@@ -3,6 +3,8 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Build Status](https://travis-ci.org/huhlig/tokio-telnet.svg?branch=master)](https://travis-ci.org/huhlig/tokio-telnet)
 
+## NOTE: This implementation is in progress and not even usable in an experimental context yet.
+
 ([API Docs])
 
 > **TODO:** Write up an interesting description.
